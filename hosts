@@ -1,0 +1,9 @@
+controller ansible_connection=local
+node1      ansible_ssh_host=172.17.177.21 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/node1/virtualbox/private_key hostname=node1
+node2      ansible_ssh_host=172.17.177.22 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/node2/virtualbox/private_key hostname=node2
+node3      ansible_ssh_host=172.17.177.23 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/node3/virtualbox/private_key hostname=node3
+lb      ansible_ssh_host=172.17.177.24 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/lb/virtualbox/private_key hostname=lb
+db      ansible_ssh_host=172.17.177.25 ansible_ssh_private_key_file=/vagrant/.vagrant/machines/db/virtualbox/private_key hostname=db
+
+[nodes]
+node[2:3]

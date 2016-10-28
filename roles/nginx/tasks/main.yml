@@ -1,0 +1,57 @@
+---
+- name: Add the Nginx source to the APT source list
+  apt_repository: repo="ppa:nginx/development" state=present
+  tags:
+    - nginx-installation
+
+- name: Install Nginx
+  apt: name={{item}} state=latest
+  with_items:
+   - nginx
+   - nginx-extras
+   - openssl
+  tags:
+    - nginx-installation
+
+- name: Create directories for error_pages & deployment_info
+  file: path={{item}} state=directory
+  with_items:
+   - /usr/share/nginx/deployment_info
+   - /usr/share/nginx/error_pages
+  tags:
+    - nginx-configuration
+
+- name: Stop Nginx
+  service: name=nginx state=stopped
+  tags:
+    - nginx-configuration
+
+- name: Add default page
+  template: src=index.html.j2 dest=/usr/share/nginx/html/index.html
+  when: inventory_hostname != 'lb'
+  notify: Restart nginx
+
+- name: Add nginx lb config
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  when: inventory_hostname == 'lb'
+  notify: Restart nginx
+  tags: 
+    - nginx-configuration
+
+#- name: Configure Nginx
+#  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+#  tags:
+#    - nginx-configuration
+
+#- name: Configure Nginx virtualhost
+#  template: src={{item.src}} dest={{item.dest}}
+#  with_items:
+#  - { src: virtualhost.j2, dest: /etc/nginx/sites-available/default }
+#  - { src: virtualhost.j2, dest: /etc/nginx/sites-enabled/default }
+#  tags:
+#    - nginx-virtualhost-configuration
+
+- name: Start Nginx
+  service: name=nginx state=started
+  tags:
+    - nginx-configuration

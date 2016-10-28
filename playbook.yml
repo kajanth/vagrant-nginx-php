@@ -1,0 +1,26 @@
+---
+ - name: Install and configure nginx php
+   hosts: node1
+   user: vagrant
+   sudo: yes
+   roles:
+      - nginxweb
+      - php
+      - testweb
+
+ - name: Install and configure nginx php
+   hosts: nodes
+   user: vagrant
+   sudo: yes
+   roles:
+      - nginxweb
+      - php
+
+ - name: Install and configure nginx php
+   hosts: lb
+   user: vagrant
+   sudo: yes
+   roles:
+      - nginx
+      - php
+      - testlb

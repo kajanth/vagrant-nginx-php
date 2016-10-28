@@ -1,0 +1,5 @@
+---
+- name: Testing for server availability
+  action: uri url=http://172.17.177.24 return_content=yes
+  register: webpage
+
