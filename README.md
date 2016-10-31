@@ -17,7 +17,7 @@ Ansible Role Names
 
 nginx - Installs and configures a web cluster fronted by a loadbalancer
 nginxweb - Installs and configures 3 web nodes
-php5 - setup ph57 and php5.0-fpm
+php5 - setup php5 and php5.0-fpm
 mysql - install and configure mysql server
 
 Playbook
